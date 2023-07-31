@@ -1,0 +1,47 @@
+device: cuda
+batch_size: 128
+
+# Dataset Path
+datasets:
+  env: prisoner
+  dataset_type: padded
+  train_path: "/data/prisoner_datasets/october_datasets/4_detect/train"
+  test_path: "/data/prisoner_datasets/october_datasets/4_detect/test"
+  view: blue # only for blue view
+  seq_len: 16
+  num_workers: 4
+
+  # Multistep into the future
+  multi_head: False
+  num_heads: 1
+  step_length: 0
+  include_current: False
+
+  # Options for different node features
+  one_hot_agents: True
+  detected_location: False
+  timestep: False
+
+# Model Setup
+model:
+  model_type: vae
+  load_pth: null
+  input_dim: 3
+  encoder_type: vae
+  hidden_dim: 32
+  latent_dim: 8
+  beta: 1.0
+  gnn_hidden_dim: 8
+  decoder_type: 'mixture'
+  number_gaussians: 4
+
+# Training Setup
+training:
+  scheduler: null
+  ml_flow_experiment: 1
+  log_dir: "/data/manisha/prisoner_logs/test/vae/"
+  seed: 105
+  learning_rate: 0.003
+  epochs: 100
+  l2_lambda: 0.15
+  weight_decay: 0.0001

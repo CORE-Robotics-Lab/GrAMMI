@@ -1,0 +1,53 @@
+device: cuda
+batch_size: 128
+
+# Dataset Path
+datasets:
+  env: smuggler
+  dataset_type: last_k_detects
+  train_path: "datasets/smuggler_datasets/smuggler_paper_2_helo_40/train"
+  test_path: "datasets/smuggler_datasets/smuggler_paper_2_helo_40/test"
+  view: blue # only for blue view
+  seq_len: 32
+  num_workers: 4
+
+  # Multistep into the future
+  multi_head: False
+  num_heads: 1
+  step_length: 10
+  include_current: False
+
+  # Options for different node features
+  one_hot_agents: False
+  detected_location: False
+  timestep: False
+
+  # Option to add
+  get_start_location: False
+  get_hideout_locations: False
+  use_last_k_detections: False
+
+# Model Setup
+model:
+  model_type: 'vrnn'
+  load_pth: null
+  input_dim: 3
+  encoder_type: 'lstm'
+  hidden_dim: 16
+  z_dim: 8
+  gnn_hidden_dim: 8
+  decoder_type: 'mixture'
+  number_gaussians: 4
+  kl_loss_weight: 0.01
+  use_last_k_detections: False  # To use last k(=8) detections as part of the fugitive state
+
+# Training Setup
+training:
+  weight_decay: 0.0001
+  scheduler: null
+  log_dir: "C:/Users/mnatarajan30/Documents/LAB/codes/prisoner_logs/iros/smuggler/2_helo_40/last_k/vrnn"
+  seed: 101
+  learning_rate: 0.0015
+  epochs: 80
+  l2_lambda: 0
+  ml_flow_experiment: 9

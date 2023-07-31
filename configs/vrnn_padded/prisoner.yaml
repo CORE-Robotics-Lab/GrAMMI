@@ -1,0 +1,51 @@
+device: cuda
+batch_size: 128
+
+# Dataset Path
+datasets:
+  env: prisoner
+  dataset_type: padded
+  train_path: "/data/prisoner_datasets/october_datasets/4_detect/train"
+  test_path: "/data/prisoner_datasets/october_datasets/4_detect/test"
+  view: blue # only for blue view
+  seq_len: 16
+  num_workers: 4
+
+  # Multistep into the future
+  multi_head: False
+  num_heads: 1
+  step_length: 0
+  include_current: False
+
+  # Options for different node features
+  one_hot_agents: True
+  detected_location: False
+  timestep: False
+
+  input_type: blue
+  output_type: red_state
+
+# Model Setup
+model:
+  model_type: vrnn_padded
+  load_pth: null
+  input_dim: 3
+  encoder_type: lstm
+  hidden_dim: 32
+  z_dim: 8
+  gnn_hidden_dim: 8
+  decoder_type: 'mixture'
+  number_gaussians: 4
+  kl_loss_weight: 0.01
+  use_last_k_detections: False
+
+# Training Setup
+training:
+  scheduler: null
+  ml_flow_experiment: 1
+  log_dir: "/data/manisha/prisoner_logs/iros/4_detects/vrnn/padded/"
+  seed: 102
+  learning_rate: 0.0015
+  epochs: 100
+  l2_lambda: 0
+  weight_decay: 0.0001

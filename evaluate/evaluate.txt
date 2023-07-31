@@ -1,0 +1,6 @@
+/data/manisha/prisoner_logs/seed_4/3_detects/contrastive_gnn/simclr/multistep/time_camera/20221025-2037/
+/data/manisha/prisoner_logs/seed_4/3_detects/contrastive_gnn/simclr/multistep/time_camera_blue/20221025-2209/
+/data/manisha/prisoner_logs/seed_4/4_detects/contrastive_gnn/simclr/multistep/time_camera/20221025-2342/
+/data/manisha/prisoner_logs/seed_4/4_detects/contrastive_gnn/simclr/multistep/time_camera_blue/20221026-0203/
+/data/manisha/prisoner_logs/seed_4/7_detects/contrastive_gnn/simclr/multistep/time_camera/20221026-0439/
+/data/manisha/prisoner_logs/seed_4/7_detects/contrastive_gnn/simclr/multistep/time_camera_blue/20221026-0604/

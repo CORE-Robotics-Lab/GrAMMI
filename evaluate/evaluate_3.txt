@@ -1,0 +1,4 @@
+logs/3_detects/lstm/20221013-0129
+/data/october_logs/3_detects/homo_gnn
+logs/3_detects/vrnn_vector/20221013-0723
+/data/october_logs/3_detects/vrnn_gnn

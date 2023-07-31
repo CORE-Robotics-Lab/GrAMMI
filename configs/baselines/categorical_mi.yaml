@@ -1,0 +1,47 @@
+device: cuda
+batch_size: 256
+
+# Dataset Path
+datasets:
+  dataset_type: padded
+  env: null
+  train_path: null
+  test_path: null
+  view: blue # only for blue view
+  seq_len: 16
+  num_workers: 4
+
+  # Multistep into the future
+  multi_head: False
+  num_heads: 1
+  step_length: null
+  include_current: False
+
+  # Options for different node features
+  one_hot_agents: True
+  detected_location: False
+  timestep: False
+
+# Model Setup
+model:
+  model_type: padded_mog_v2
+  load_pth: null
+  input_dim: 3
+  encoder_type: lstm
+  h1: 32
+  h2: 16
+  gnn_hidden_dim: 8
+  decoder_type: 'mixture'
+  number_gaussians: 4
+
+# Training Setup
+training:
+  scheduler: null
+  ml_flow_experiment: 1
+  log_dir: null
+  seed: 101
+  alpha: 5
+  learning_rate: 0.00008
+  epochs: 100
+  l2_lambda: 0.15
+  weight_decay: 0.0
