@@ -88,25 +88,12 @@ def train(seed,
           wandb_flag = False):
     set_seeds(seed)
 
-    # embeddings_dim = config["model"]["embedding_dim"]
     num_gaussians = config["model"]["number_gaussians"]
     alpha = config["training"]["alpha"]
 
-    # trajectory_specific_embeddings = initialize_categorical_embeddings(num_gaussians, 300, device)
-    # test_specific_embeddings = initialize_categorical_embeddings(num_gaussians, 100, device)
-
-    # trajectory_specific_embeddings = nn.ParameterList([nn.Parameter(torch.zeros(embeddings_dim)) for _ in range(300)]).to(device).long()
-    # test_specific_embeddings = nn.ParameterList([nn.Parameter(torch.zeros(embeddings_dim)) for _ in range(100)]).to(device).long()
-
-    posterior = PosteriorMLP(in_dim=45, hidden_dim=16, out_dim=4).to(device)
-    # posterior = PosteriorMLP(in_dim=37, hidden_dim=16, out_dim=4).to(device)
-
-    # include model parameters 
-    # optimizer = torch.optim.RMSprop([{'params': model.parameters()}, {'params': posterior.parameters()}], lr=learning_rate, weight_decay=1e-5)
-
+    posterior = PosteriorMLP(in_dim=model.encoder_output_dim, hidden_dim=16, out_dim=num_gaussians).to(device)
+    
     optimizer = torch.optim.Adam([{'params': model.parameters()}, {'params': posterior.parameters()}], lr=learning_rate, weight_decay=1e-5)
-
-    # optimizer = torch.optim.AdamW([{'params': model.parameters()}, {'params': posterior.parameters()}], lr=learning_rate)
 
     scheduler = MultiStepLR(optimizer, milestones=[12,80], gamma=0.1)
     losses = []

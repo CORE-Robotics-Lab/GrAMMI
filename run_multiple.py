@@ -160,37 +160,52 @@ if __name__ == "__main__":
     # paper_2_helo_60 corresponds to high detection rate
 
     # This file is used to train multiple seeds for the models
-
-    dataset_paths = [("grammi_datasets/prisoner_datasets/3_detect", "prisoner"),
-                     ("grammi_datasets/prisoner_datasets/4_detect", "prisoner"),
-                     ("grammi_datasets/prisoner_datasets/7_detect", "prisoner"),
-                     ("grammi_datasets/smuggler_datasets/paper_2_helo_40", "smuggler"),
-                     ("grammi_datasets/smuggler_datasets/paper_2_helo_60", "smuggler"),]
-    
-    # dataset_paths = [("/data/prisoner_datasets/october_datasets/3_detect", "prisoner"),
-    #                  ("/data/prisoner_datasets/october_datasets/4_detect", "prisoner"),
-    #                  ("/data/prisoner_datasets/october_datasets/7_detect", "prisoner"),]
-
     base_log_directory = "logs"
 
     # Run baseline models
     timestep = 0 # in the paper, we train for 0, 30, and 60 timesteps
 
-    # train baseline model
+    # The below for training non-gnn models
+    ######################################################################################
+
+    dataset_paths = [("grammi_datasets/prisoner_datasets/3_detect", "prisoner"),
+                     ("grammi_datasets/prisoner_datasets/4_detect", "prisoner"),
+                     ("grammi_datasets/prisoner_datasets/7_detect", "prisoner"),
+                     ("grammi_datasets/smuggler_datasets/smuggler_paper_2_helo_40", "smuggler"),
+                     ("grammi_datasets/smuggler_datasets/smuggler_paper_3_helo_40", "smuggler"),]
+
+    # Uncomment below to train baseline models
     # run_reg(timestep, dataset_paths, base_log_directory)
 
     # train categorical (just \omega model) with no mutual information
     run_categorical(timestep, dataset_paths, base_log_directory)
 
+    # #### Mutual Information models
+    # fine tune the previous models to include mutual information
+    dataset_paths = [("grammi_datasets/prisoner_datasets/3_detect", "prisoner", f"{base_log_directory}/{timestep}/3_detect/categorical"),
+                     ("grammi_datasets/prisoner_datasets/4_detect", "prisoner",  f"{base_log_directory}/{timestep}/4_detect/categorical"),
+                     ("grammi_datasets/prisoner_datasets/7_detect", "prisoner",  f"{base_log_directory}/{timestep}/7_detect/categorical"),
+                     ("grammi_datasets/smuggler_datasets/smuggler_paper_2_helo_40", "smuggler", f"{base_log_directory}/{timestep}/smuggler_paper_2_helo_40/categorical"),
+                     ("grammi_datasets/smuggler_datasets/smuggler_paper_3_helo_40", "smuggler", f"{base_log_directory}/{timestep}/smuggler_paper_2_helo_60/categorical")]
+
+    run_categorical_mutual_info(timestep, dataset_paths, base_log_directory)
+    
+    # The below is for training gnn models
+    ######################################################################################
+    dataset_paths = [("grammi_datasets/prisoner_datasets/3_detect", "prisoner"),
+                     ("grammi_datasets/prisoner_datasets/4_detect", "prisoner"),
+                     ("grammi_datasets/prisoner_datasets/7_detect", "prisoner"),
+                     ("grammi_datasets/smuggler_datasets/smuggler_paper_2_helo_40", "smuggler"),
+                     ("grammi_datasets/smuggler_datasets/smuggler_paper_3_helo_40", "smuggler"),]
+
     # train categorical with agent GNN encoding
     run_agent(timestep, dataset_paths, base_log_directory)
 
-    # #### Mutual Information models
-    # fine tune the previous models to include mutual information
-    dataset_paths = [("datasets/prisoner_datasets/3_detect", "prisoner", f"logs/{timestep}/3_detect/categorical"),
-                     ("datasets/prisoner_datasets/4_detect", "prisoner",  f"logs/{timestep}/4_detect/categorical"),
-                     ("datasets/prisoner_datasets/7_detect", "prisoner",  f"logs/{timestep}/7_detect/categorical"),]
+    dataset_paths = [("grammi_datasets/prisoner_datasets/3_detect", "prisoner", f"{base_log_directory}/{timestep}/3_detect/agent_gnn"),
+                     ("grammi_datasets/prisoner_datasets/4_detect", "prisoner",  f"{base_log_directory}/{timestep}/4_detect/agent_gnn"),
+                     ("grammi_datasets/prisoner_datasets/7_detect", "prisoner",  f"{base_log_directory}/{timestep}/7_detect/agent_gnn"),
+                     ("grammi_datasets/smuggler_datasets/smuggler_paper_2_helo_40", "smuggler", f"{base_log_directory}/{timestep}/smuggler_paper_2_helo_40/agent_gnn"),
+                     ("grammi_datasets/smuggler_datasets/smuggler_paper_3_helo_40", "smuggler", f"{base_log_directory}/{timestep}/smuggler_paper_2_helo_60/agent_gnn")]
 
     # train with mutual information (fine-tuned from last model). 
-    # The agent encoder uses the same script just with different model paths 
-    run_categorical_mutual_info(timestep, dataset_paths, base_log_directory)
+    run_categorical_mutual_info_agent(timestep, dataset_paths, base_log_directory)

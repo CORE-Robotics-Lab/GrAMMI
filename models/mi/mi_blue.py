@@ -126,6 +126,8 @@ class BlueMIMixture(nn.Module):
 
         self.softmax = nn.Softmax(dim=1)
 
+        self.encoder_output_dim = h1 + output_dim * 2 + 1
+
     def forward(self, x):
         pi_categoricals = torch.eye(self.num_mixtures).to(self.device)
         pis, mus, sigmas = [], [], []

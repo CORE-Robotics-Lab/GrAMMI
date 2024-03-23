@@ -62,6 +62,8 @@ class BlueMIMixtureGNN(nn.Module):
 
         self.softmax = nn.Softmax(dim=1)
 
+        self.encoder_output_dim = h1 + gnn_hidden + output_dim * 2 + 1
+
     def initialize_graph(self, num_agents):
         # initialize graph just from 
         s, e = fully_connected(num_agents)
