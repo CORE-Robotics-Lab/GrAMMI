@@ -157,7 +157,7 @@ if __name__ == "__main__":
 
     ## Smuggler
     # paper_2_helo_40 corresponds to low detection rate
-    # paper_2_helo_60 corresponds to high detection rate
+    # paper_3_helo_40 corresponds to high detection rate
 
     # This file is used to train multiple seeds for the models
     base_log_directory = "logs"
@@ -186,7 +186,7 @@ if __name__ == "__main__":
                      ("grammi_datasets/prisoner_datasets/4_detect", "prisoner",  f"{base_log_directory}/{timestep}/4_detect/categorical"),
                      ("grammi_datasets/prisoner_datasets/7_detect", "prisoner",  f"{base_log_directory}/{timestep}/7_detect/categorical"),
                      ("grammi_datasets/smuggler_datasets/smuggler_paper_2_helo_40", "smuggler", f"{base_log_directory}/{timestep}/smuggler_paper_2_helo_40/categorical"),
-                     ("grammi_datasets/smuggler_datasets/smuggler_paper_3_helo_40", "smuggler", f"{base_log_directory}/{timestep}/smuggler_paper_2_helo_60/categorical")]
+                     ("grammi_datasets/smuggler_datasets/smuggler_paper_3_helo_40", "smuggler", f"{base_log_directory}/{timestep}/smuggler_paper_3_helo_40/categorical")]
 
     run_categorical_mutual_info(timestep, dataset_paths, base_log_directory)
     
@@ -205,7 +205,7 @@ if __name__ == "__main__":
                      ("grammi_datasets/prisoner_datasets/4_detect", "prisoner",  f"{base_log_directory}/{timestep}/4_detect/agent_gnn"),
                      ("grammi_datasets/prisoner_datasets/7_detect", "prisoner",  f"{base_log_directory}/{timestep}/7_detect/agent_gnn"),
                      ("grammi_datasets/smuggler_datasets/smuggler_paper_2_helo_40", "smuggler", f"{base_log_directory}/{timestep}/smuggler_paper_2_helo_40/agent_gnn"),
-                     ("grammi_datasets/smuggler_datasets/smuggler_paper_3_helo_40", "smuggler", f"{base_log_directory}/{timestep}/smuggler_paper_2_helo_60/agent_gnn")]
+                     ("grammi_datasets/smuggler_datasets/smuggler_paper_3_helo_40", "smuggler", f"{base_log_directory}/{timestep}/smuggler_paper_3_helo_40/agent_gnn")]
 
     # train with mutual information (fine-tuned from last model). 
     run_categorical_mutual_info_agent(timestep, dataset_paths, base_log_directory)
